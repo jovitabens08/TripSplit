@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TripSplit — Group Expense Settlement</title>
+<link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+<div class="app">
+  <nav class="rail">
+    <h3 class="rail-title serif">TripSplit</h3>
+    <div class="rail-sub">Group travel expense settlement</div>
+
+    <div id="trip-list"></div>
+
+    <div class="new-trip-box">
+      <h4>New trip</h4>
+      <input id="new-trip-name" placeholder="Trip name">
+      <input id="new-trip-people" placeholder="Participants, comma separated">
+      <button class="btn btn-accent" style="width:100%;" onclick="createTrip()">Create trip</button>
+    </div>
+  </nav>
+
+  <main>
+    <div id="empty-state" class="empty-state">Select a trip on the left, or create a new one to get started.</div>
+
+    <div id="trip-view" style="display:none;">
+      <div class="trip-head">
+        <div>
+          <h2 class="serif" id="trip-name"></h2>
+          <span class="meta" id="trip-meta"></span>
+        </div>
+        <button class="btn btn-red del-trip" onclick="deleteCurrentTrip()">Delete trip</button>
+      </div>
+
+      <div class="tabs">
+        <button class="tabbtn active" data-tab="participants">Participants</button>
+        <button class="tabbtn" data-tab="expenses">Expenses</button>
+        <button class="tabbtn" data-tab="settle">Balances &amp; Settlement</button>
+      </div>
+
+      <!-- PARTICIPANTS -->
+      <section id="tab-participants">
+        <div class="panel">
+          <h3>Add a participant</h3>
+          <div class="form-grid">
+            <div class="field"><label>Name</label><input id="p-name" placeholder="e.g. Priya"></div>
+          </div>
+          <div class="btn-row">
+            <button class="btn btn-primary" onclick="addParticipant()">Add participant</button>
+          </div>
+        </div>
+        <div id="participants-list"></div>
+      </section>
+
+      <!-- EXPENSES -->
+      <section id="tab-expenses" style="display:none;">
+        <div class="panel">
+          <h3>Log an expense</h3>
+          <div class="form-grid">
+            <div class="field"><label>Description</label><input id="e-desc" placeholder="e.g. Dinner at hostel"></div>
+            <div class="field"><label>Amount</label><input id="e-amount" type="number" step="0.01" min="0.01" placeholder="0.00"></div>
+            <div class="field full"><label>Paid by</label><select id="e-payer"></select></div>
+            <div class="field full">
+              <label>Shared by</label>
+              <div class="check-grid" id="e-sharers"></div>
+            </div>
+          </div>
+          <div class="btn-row">
+            <button class="btn btn-primary" onclick="createExpense()">Log expense</button>
+          </div>
+        </div>
+        <div id="expenses-list"></div>
+      </section>
+
+      <!-- SETTLEMENT -->
+      <section id="tab-settle" style="display:none;">
+        <div class="panel">
+          <h3>Net balances</h3>
+          <div id="balances-list"></div>
+        </div>
+        <div class="panel">
+          <h3>Settlement</h3>
+          <div class="btn-row" style="margin-top:0; margin-bottom:14px;">
+            <button class="btn btn-accent" onclick="generateSettlement()">Generate settlement</button>
+          </div>
+          <div id="settlement-list"></div>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="index.js"></script>
+</body>
+</html>
